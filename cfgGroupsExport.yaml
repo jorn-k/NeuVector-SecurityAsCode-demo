@@ -1,0 +1,667 @@
+apiVersion: v1
+items:
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.exploit.demo
+    namespace: demo
+  spec:
+    dlp:
+      settings:
+      - action: deny
+        name: sensor.ssn
+      status: true
+    egress:
+    - action: allow
+      applications:
+      - DNS
+      name: nv.kube-dns.kube-system-egress-0
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: kube-dns.kube-system
+        - key: domain
+          op: =
+          value: kube-system
+        name: nv.kube-dns.kube-system
+        original_name: ""
+    - action: allow
+      applications:
+      - MySQL
+      name: nv.mysql1.demo-egress-1
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: mysql1.demo
+        - key: domain
+          op: =
+          value: demo
+        name: nv.mysql1.demo
+        original_name: ""
+    file: []
+    ingress: []
+    process:
+    - action: allow
+      allow_update: false
+      name: busybox
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: ls
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    - action: allow
+      allow_update: false
+      name: python3
+      path: /usr/bin/python3.10
+    - action: allow
+      allow_update: false
+      name: sh
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: sleep
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: ssl_client
+      path: /usr/bin/ssl_client
+    - action: allow
+      allow_update: false
+      name: wget
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: whoami
+      path: /bin/busybox
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Protect
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: exploit.demo
+        - key: domain
+          op: =
+          value: demo
+        name: nv.exploit.demo
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.iodine-client.demo
+    namespace: demo
+  spec:
+    dlp:
+      settings:
+      - action: deny
+        name: sensor.ssn
+      status: true
+    egress: []
+    file: []
+    ingress: []
+    process:
+    - action: allow
+      allow_update: false
+      name: apt
+      path: /bin/dash
+    - action: allow
+      allow_update: false
+      name: apt-config
+      path: /usr/bin/apt-config
+    - action: allow
+      allow_update: false
+      name: apt-get
+      path: /usr/bin/apt-get
+    - action: allow
+      allow_update: false
+      name: cmp
+      path: /usr/bin/cmp
+    - action: allow
+      allow_update: false
+      name: cron
+      path: /usr/sbin/cron
+    - action: allow
+      allow_update: false
+      name: dash
+      path: /bin/dash
+    - action: allow
+      allow_update: false
+      name: date
+      path: /bin/date
+    - action: allow
+      allow_update: false
+      name: dpkg
+      path: /bin/dash
+    - action: allow
+      allow_update: false
+      name: dpkg
+      path: /usr/bin/dpkg
+    - action: allow
+      allow_update: false
+      name: gzip
+      path: /bin/gzip
+    - action: allow
+      allow_update: false
+      name: head
+      path: /usr/bin/head
+    - action: allow
+      allow_update: false
+      name: iodined
+      path: /bin/dash
+    - action: allow
+      allow_update: false
+      name: iodined
+      path: /usr/sbin/iodined
+    - action: allow
+      allow_update: false
+      name: logrotate
+      path: /bin/dash
+    - action: allow
+      allow_update: false
+      name: logrotate
+      path: /usr/sbin/logrotate
+    - action: allow
+      allow_update: false
+      name: mkdir
+      path: /bin/mkdir
+    - action: allow
+      allow_update: false
+      name: mknod
+      path: /bin/mknod
+    - action: allow
+      allow_update: false
+      name: mv
+      path: /bin/mv
+    - action: allow
+      allow_update: false
+      name: my_init
+      path: /usr/bin/python3.4
+    - action: allow
+      allow_update: false
+      name: passwd
+      path: /bin/dash
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    - action: allow
+      allow_update: false
+      name: run
+      path: /bin/dash
+    - action: allow
+      allow_update: false
+      name: run
+      path: /usr/sbin/iodined
+    - action: allow
+      allow_update: false
+      name: run-parts
+      path: /bin/run-parts
+    - action: allow
+      allow_update: false
+      name: runsv
+      path: /usr/bin/runsv
+    - action: allow
+      allow_update: false
+      name: runsvdir
+      path: /usr/bin/runsvdir
+    - action: allow
+      allow_update: false
+      name: sed
+      path: /bin/sed
+    - action: allow
+      allow_update: false
+      name: sh
+      path: /bin/dash
+    - action: allow
+      allow_update: false
+      name: sv
+      path: /usr/bin/sv
+    - action: allow
+      allow_update: false
+      name: syslog-ng
+      path: /usr/sbin/syslog-ng
+    - action: allow
+      allow_update: false
+      name: tail
+      path: /usr/bin/tail
+    - action: allow
+      allow_update: false
+      name: "true"
+      path: /bin/true
+    - action: allow
+      allow_update: false
+      name: upstart
+      path: /bin/dash
+    - action: allow
+      allow_update: false
+      name: which
+      path: /bin/dash
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Protect
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: iodine-client.demo
+        - key: domain
+          op: =
+          value: demo
+        name: nv.iodine-client.demo
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.mysql1.demo
+    namespace: demo
+  spec:
+    dlp:
+      settings:
+      - action: deny
+        name: sensor.creditcard
+      status: true
+    egress: []
+    file: []
+    ingress: []
+    process:
+    - action: allow
+      allow_update: false
+      name: mysqld
+      path: /usr/sbin/mysqld
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: mysql1.demo
+        - key: domain
+          op: =
+          value: demo
+        name: nv.mysql1.demo
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.nginx-pod.demo
+    namespace: demo
+  spec:
+    dlp:
+      settings:
+      - action: deny
+        name: sensor.creditcard
+      - action: deny
+        name: sensor.ssn
+      status: true
+    egress:
+    - action: allow
+      applications:
+      - DNS
+      name: nv.kube-dns.kube-system-egress-2
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: kube-dns.kube-system
+        - key: domain
+          op: =
+          value: kube-system
+        name: nv.kube-dns.kube-system
+        original_name: ""
+    - action: allow
+      applications:
+      - HTTP
+      name: nv.node-pod.demo-egress-3
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: domain
+          op: =
+          value: demo
+        - key: service
+          op: =
+          value: node-pod.demo
+        name: nv.node-pod.demo
+        original_name: ""
+    file: []
+    ingress:
+    - action: allow
+      applications:
+      - DNS
+      name: nv.nginx-pod.demo-ingress-0
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: nginx-pod.demo
+        - key: domain
+          op: =
+          value: demo
+        name: nv.nginx-pod.demo
+        original_name: ""
+    process:
+    - action: allow
+      allow_update: false
+      name: bash
+      path: /bin/bash
+    - action: allow
+      allow_update: false
+      name: nginx
+      path: /usr/sbin/nginx
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    - action: allow
+      allow_update: false
+      name: sh
+      path: /bin/dash
+    - action: allow
+      allow_update: false
+      name: wget
+      path: /usr/bin/wget
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: nginx-pod.demo
+        - key: domain
+          op: =
+          value: demo
+        name: nv.nginx-pod.demo
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.node-pod.demo
+    namespace: demo
+  spec:
+    dlp:
+      settings:
+      - action: deny
+        name: sensor.ssn
+      status: true
+    egress:
+    - action: allow
+      applications:
+      - Oracle
+      name: Oracle-Database-egress-4
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: address
+          op: =
+          value: '*.oracle-db-cluster.internal.com'
+        - key: address
+          op: =
+          value: 172.0.1.1
+        name: Oracle-Database
+        original_name: ""
+    - action: allow
+      applications:
+      - Redis
+      name: nv.redis-pod.demo-egress-5
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: redis-pod.demo
+        - key: domain
+          op: =
+          value: demo
+        name: nv.redis-pod.demo
+        original_name: ""
+    - action: allow
+      applications:
+      - DNS
+      name: nv.kube-dns.kube-system-egress-6
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: kube-dns.kube-system
+        - key: domain
+          op: =
+          value: kube-system
+        name: nv.kube-dns.kube-system
+        original_name: ""
+    file: []
+    ingress: []
+    process:
+    - action: allow
+      allow_update: false
+      name: node
+      path: /usr/bin/nodejs
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    - action: allow
+      allow_update: false
+      name: sh
+      path: /bin/dash
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: domain
+          op: =
+          value: demo
+        - key: service
+          op: =
+          value: node-pod.demo
+        name: nv.node-pod.demo
+        original_name: ""
+    waf:
+      settings:
+      - action: deny
+        name: test
+      status: false
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.redis-pod.demo
+    namespace: demo
+  spec:
+    dlp:
+      settings:
+      - action: deny
+        name: sensor.ssn
+      status: true
+    egress: []
+    file: []
+    ingress: []
+    process:
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    - action: allow
+      allow_update: false
+      name: redis-server
+      path: /usr/local/bin/redis-server
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Monitor
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: redis-pod.demo
+        - key: domain
+          op: =
+          value: demo
+        name: nv.redis-pod.demo
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.struts.demo
+    namespace: demo
+  spec:
+    dlp:
+      settings: []
+      status: true
+    egress: []
+    file:
+    - app:
+      - /usr/lib/jvm/java-1.8-openjdk/jre/bin/java
+      behavior: monitor_change
+      filter: /*
+      recursive: true
+    ingress:
+    - action: allow
+      applications:
+      - HTTP
+      - MSSQL
+      - Wordpress
+      name: nv.struts.demo-ingress-1
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        name: Workload:ingress
+        original_name: ""
+    - action: allow
+      applications:
+      - HTTP
+      - MSSQL
+      - RTSP
+      - Wordpress
+      name: nv.struts.demo-ingress-2
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria: []
+        name: nodes
+        original_name: ""
+    - action: allow
+      applications:
+      - HTTP
+      - SSL
+      name: nv.struts.demo-ingress-3
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria: []
+        name: external
+        original_name: ""
+    - action: allow
+      applications:
+      - any
+      name: nv.struts.demo-ingress-4
+      ports: tcp/8080
+      priority: 0
+      selector:
+        comment: ""
+        criteria: []
+        name: nodes
+        original_name: ""
+    - action: allow
+      applications:
+      - any
+      name: nv.struts.demo-ingress-5
+      ports: tcp/8080
+      priority: 0
+      selector:
+        comment: ""
+        name: Workload:ingress
+        original_name: ""
+    process:
+    - action: allow
+      allow_update: false
+      name: java
+      path: /usr/lib/jvm/java-1.8-openjdk/jre/bin/java
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: struts.demo
+        - key: domain
+          op: =
+          value: demo
+        name: nv.struts.demo
+        original_name: ""
+    waf:
+      settings:
+      - action: deny
+        name: sensor.log4shell
+      status: true
+kind: List
+metadata: null
