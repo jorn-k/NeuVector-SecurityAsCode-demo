@@ -1,0 +1,9 @@
+apiVersion: neuvector.com/v1
+kind: NvAdmissionControlSecurityRule
+metadata:
+  name: local
+spec:
+  config:
+    client_mode: service
+    enable: true
+    mode: monitor
