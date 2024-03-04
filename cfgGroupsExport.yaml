@@ -79,10 +79,6 @@ items:
       path: /usr/bin/ssl_client
     - action: allow
       allow_update: false
-      name: wget
-      path: /bin/busybox
-    - action: allow
-      allow_update: false
       name: whoami
       path: /bin/busybox
     process_profile:
