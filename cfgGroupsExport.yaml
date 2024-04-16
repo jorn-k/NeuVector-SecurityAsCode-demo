@@ -8,7 +8,7 @@ items:
   spec:
     dlp:
       settings: []
-      status: true
+      status: false
     egress: []
     file: []
     ingress:
