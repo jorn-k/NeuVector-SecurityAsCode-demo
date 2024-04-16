@@ -3,41 +3,19 @@ items:
 - apiVersion: neuvector.com/v1
   kind: NvSecurityRule
   metadata:
-    name: nv.prometheus.lens-metrics
-    namespace: lens-metrics
+    name: nv.currencyservice.online-boutique
+    namespace: online-boutique
   spec:
     dlp:
       settings: []
       status: true
-    egress:
-    - action: allow
-      applications:
-      - SSL
-      name: nodes-egress-0
-      ports: any
-      priority: 0
-      selector:
-        comment: ""
-        criteria: []
-        name: nodes
-        original_name: ""
-    - action: allow
-      applications:
-      - SSL
-      name: external-egress-1
-      ports: any
-      priority: 0
-      selector:
-        comment: ""
-        criteria: []
-        name: external
-        original_name: ""
+    egress: []
     file: []
     ingress:
     - action: allow
       applications:
       - HTTP
-      name: nv.prometheus.lens-metrics-ingress-0
+      name: nv.currencyservice.online-boutique-ingress-0
       ports: any
       priority: 0
       selector:
@@ -46,8 +24,18 @@ items:
         original_name: ""
     - action: allow
       applications:
+      - any
+      name: nv.currencyservice.online-boutique-ingress-1
+      ports: tcp/7000
+      priority: 0
+      selector:
+        comment: ""
+        name: Workload:ingress
+        original_name: ""
+    - action: allow
+      applications:
       - HTTP
-      name: nv.prometheus.lens-metrics-ingress-1
+      name: nv.currencyservice.online-boutique-ingress-2
       ports: any
       priority: 0
       selector:
@@ -55,35 +43,69 @@ items:
         criteria:
         - key: service
           op: =
-          value: konnectivity-agent.kube-system
+          value: frontend.online-boutique
         - key: domain
           op: =
-          value: kube-system
-        name: nv.konnectivity-agent.kube-system
+          value: online-boutique
+        name: nv.frontend.online-boutique
         original_name: ""
-    process:
     - action: allow
-      allow_update: false
-      name: pause
-      path: /pause
-    - action: allow
-      allow_update: false
-      name: prometheus
-      path: /bin/prometheus
-    process_profile:
-      baseline: basic
-    target:
-      policymode: Discover
+      applications:
+      - HTTP
+      name: nv.currencyservice.online-boutique-ingress-3
+      ports: any
+      priority: 0
       selector:
         comment: ""
         criteria:
         - key: service
           op: =
-          value: prometheus.lens-metrics
+          value: checkoutservice.online-boutique
         - key: domain
           op: =
-          value: lens-metrics
-        name: nv.prometheus.lens-metrics
+          value: online-boutique
+        name: nv.checkoutservice.online-boutique
+        original_name: ""
+    - action: allow
+      applications:
+      - any
+      name: nv.currencyservice.online-boutique-ingress-4
+      ports: tcp/7000
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: frontend.online-boutique
+        - key: domain
+          op: =
+          value: online-boutique
+        name: nv.frontend.online-boutique
+        original_name: ""
+    process:
+    - action: allow
+      allow_update: false
+      name: node
+      path: /usr/local/bin/node
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Protect
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: currencyservice.online-boutique
+        - key: domain
+          op: =
+          value: online-boutique
+        name: nv.currencyservice.online-boutique
         original_name: ""
     waf:
       settings: []
