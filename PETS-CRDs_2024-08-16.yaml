@@ -1,0 +1,812 @@
+apiVersion: v1
+items:
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.makeline-service.pets
+    namespace: pets
+  spec:
+    dlp:
+      settings: []
+      status: true
+    egress:
+    - action: allow
+      applications:
+      - DNS
+      name: nv.kube-dns.kube-system-egress-0
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: kube-dns.kube-system
+        - key: domain
+          op: =
+          value: kube-system
+        name: nv.kube-dns.kube-system
+        original_name: ""
+    - action: allow
+      applications:
+      - MongoDB
+      name: nv.mongodb.pets-egress-1
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: mongodb.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.mongodb.pets
+        original_name: ""
+    - action: allow
+      applications:
+      - RabbitMQ
+      name: nv.rabbitmq.pets-egress-2
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: rabbitmq.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.rabbitmq.pets
+        original_name: ""
+    file: []
+    ingress:
+    - action: allow
+      applications:
+      - HTTP
+      name: nv.makeline-service.pets-ingress-0
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        name: Workload:ingress
+        original_name: ""
+    - action: allow
+      applications:
+      - HTTP
+      name: nv.makeline-service.pets-ingress-1
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: virtual-worker.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.virtual-worker.pets
+        original_name: ""
+    - action: allow
+      applications:
+      - HTTP
+      name: nv.makeline-service.pets-ingress-2
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: store-admin.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.store-admin.pets
+        original_name: ""
+    process:
+    - action: allow
+      allow_update: false
+      name: main
+      path: /main
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: makeline-service.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.makeline-service.pets
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.mongodb.pets
+    namespace: pets
+  spec:
+    dlp:
+      settings: []
+      status: true
+    egress: []
+    file: []
+    ingress: []
+    process:
+    - action: allow
+      allow_update: false
+      name: mongod
+      path: /usr/bin/mongod
+    - action: allow
+      allow_update: false
+      name: mongosh
+      path: '*'
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: mongodb.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.mongodb.pets
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.order-service.pets
+    namespace: pets
+  spec:
+    dlp:
+      settings: []
+      status: true
+    egress:
+    - action: allow
+      applications:
+      - DNS
+      name: nv.kube-dns.kube-system-egress-3
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: kube-dns.kube-system
+        - key: domain
+          op: =
+          value: kube-system
+        name: nv.kube-dns.kube-system
+        original_name: ""
+    - action: allow
+      applications:
+      - RabbitMQ
+      name: nv.rabbitmq.pets-egress-4
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: rabbitmq.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.rabbitmq.pets
+        original_name: ""
+    file: []
+    ingress:
+    - action: allow
+      applications:
+      - HTTP
+      name: nv.order-service.pets-ingress-3
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: virtual-customer.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.virtual-customer.pets
+        original_name: ""
+    - action: allow
+      applications:
+      - HTTP
+      name: nv.order-service.pets-ingress-4
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        name: Workload:ingress
+        original_name: ""
+    process:
+    - action: allow
+      allow_update: false
+      name: fastify
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: node
+      path: /usr/local/bin/node
+    - action: allow
+      allow_update: false
+      name: npm
+      path: /usr/local/bin/node
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    - action: allow
+      allow_update: false
+      name: sh
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: sh
+      path: /bin/sh
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: order-service.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.order-service.pets
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.product-service.pets
+    namespace: pets
+  spec:
+    dlp:
+      settings: []
+      status: true
+    egress:
+    - action: allow
+      applications:
+      - DNS
+      name: nv.kube-dns.kube-system-egress-5
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: kube-dns.kube-system
+        - key: domain
+          op: =
+          value: kube-system
+        name: nv.kube-dns.kube-system
+        original_name: ""
+    file: []
+    ingress:
+    - action: allow
+      applications:
+      - HTTP
+      name: nv.product-service.pets-ingress-5
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        name: Workload:ingress
+        original_name: ""
+    - action: allow
+      applications:
+      - HTTP
+      name: nv.product-service.pets-ingress-6
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: store-front.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.store-front.pets
+        original_name: ""
+    - action: allow
+      applications:
+      - HTTP
+      name: nv.product-service.pets-ingress-7
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: store-admin.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.store-admin.pets
+        original_name: ""
+    process:
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    - action: allow
+      allow_update: false
+      name: product-service
+      path: /app/product-service
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: product-service.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.product-service.pets
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.rabbitmq.pets
+    namespace: pets
+  spec:
+    dlp:
+      settings: []
+      status: true
+    egress: []
+    file: []
+    ingress: []
+    process:
+    - action: allow
+      allow_update: false
+      name: basename
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: beam.smp
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: beam.smp
+      path: /opt/erlang/lib/erlang/erts-13.2.2.6/bin/beam.smp
+    - action: allow
+      allow_update: false
+      name: beam.smp
+      path: /opt/erlang/lib/erlang/erts-13.2.2.6/bin/erlexec
+    - action: allow
+      allow_update: false
+      name: busybox
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: df
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: dirname
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: dyn_erl
+      path: /opt/erlang/lib/erlang/erts-13.2.2.6/bin/dyn_erl
+    - action: allow
+      allow_update: false
+      name: epmd
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: epmd
+      path: /opt/erlang/lib/erlang/erts-13.2.2.6/bin/epmd
+    - action: allow
+      allow_update: false
+      name: erl
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: erl
+      path: /opt/erlang/lib/erlang/erts-13.2.2.6/bin/erlexec
+    - action: allow
+      allow_update: false
+      name: erl_child_setup
+      path: /opt/erlang/lib/erlang/erts-13.2.2.6/bin/erl_child_setup
+    - action: allow
+      allow_update: false
+      name: erlexec
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: erlexec
+      path: /opt/erlang/lib/erlang/erts-13.2.2.6/bin/beam.smp
+    - action: allow
+      allow_update: false
+      name: erlexec
+      path: /opt/erlang/lib/erlang/erts-13.2.2.6/bin/erlexec
+    - action: allow
+      allow_update: false
+      name: inet_gethost
+      path: /opt/erlang/lib/erlang/erts-13.2.2.6/bin/inet_gethost
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    - action: allow
+      allow_update: false
+      name: sh
+      path: /bin/busybox
+    - action: allow
+      allow_update: false
+      name: sh
+      path: /opt/erlang/lib/erlang/erts-13.2.2.6/bin/epmd
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: rabbitmq.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.rabbitmq.pets
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.store-admin.pets
+    namespace: pets
+  spec:
+    dlp:
+      settings: []
+      status: true
+    egress:
+    - action: allow
+      applications:
+      - DNS
+      name: nv.kube-dns.kube-system-egress-6
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: kube-dns.kube-system
+        - key: domain
+          op: =
+          value: kube-system
+        name: nv.kube-dns.kube-system
+        original_name: ""
+    file: []
+    ingress:
+    - action: allow
+      applications:
+      - HTTP
+      - MSSQL
+      - Wordpress
+      name: nv.store-admin.pets-ingress-8
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        name: Workload:ingress
+        original_name: ""
+    - action: allow
+      applications:
+      - HTTP
+      - MSSQL
+      - Wordpress
+      name: nv.store-admin.pets-ingress-9
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria: []
+        name: nodes
+        original_name: ""
+    process:
+    - action: allow
+      allow_update: false
+      name: nginx
+      path: /usr/sbin/nginx
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: store-admin.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.store-admin.pets
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.store-front.pets
+    namespace: pets
+  spec:
+    dlp:
+      settings: []
+      status: true
+    egress:
+    - action: allow
+      applications:
+      - DNS
+      name: nv.kube-dns.kube-system-egress-7
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: kube-dns.kube-system
+        - key: domain
+          op: =
+          value: kube-system
+        name: nv.kube-dns.kube-system
+        original_name: ""
+    file: []
+    ingress:
+    - action: allow
+      applications:
+      - HTTP
+      - Wordpress
+      name: nv.store-front.pets-ingress-10
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        name: Workload:ingress
+        original_name: ""
+    - action: allow
+      applications:
+      - HTTP
+      - Wordpress
+      name: nv.store-front.pets-ingress-11
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria: []
+        name: nodes
+        original_name: ""
+    - action: allow
+      applications:
+      - HTTP
+      name: nv.store-front.pets-ingress-12
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria: []
+        name: external
+        original_name: ""
+    - action: allow
+      applications:
+      - any
+      name: nv.store-front.pets-ingress-13
+      ports: tcp/8080
+      priority: 0
+      selector:
+        comment: ""
+        criteria: []
+        name: nodes
+        original_name: ""
+    - action: allow
+      applications:
+      - any
+      name: nv.store-front.pets-ingress-14
+      ports: tcp/8080
+      priority: 0
+      selector:
+        comment: ""
+        name: Workload:ingress
+        original_name: ""
+    process:
+    - action: allow
+      allow_update: false
+      name: nginx
+      path: /usr/sbin/nginx
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: store-front.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.store-front.pets
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.virtual-customer.pets
+    namespace: pets
+  spec:
+    dlp:
+      settings: []
+      status: true
+    egress:
+    - action: allow
+      applications:
+      - DNS
+      name: nv.kube-dns.kube-system-egress-8
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: kube-dns.kube-system
+        - key: domain
+          op: =
+          value: kube-system
+        name: nv.kube-dns.kube-system
+        original_name: ""
+    file: []
+    ingress: []
+    process:
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    - action: allow
+      allow_update: false
+      name: virtual-customer
+      path: /app/virtual-customer
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: virtual-customer.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.virtual-customer.pets
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+- apiVersion: neuvector.com/v1
+  kind: NvSecurityRule
+  metadata:
+    name: nv.virtual-worker.pets
+    namespace: pets
+  spec:
+    dlp:
+      settings: []
+      status: true
+    egress:
+    - action: allow
+      applications:
+      - DNS
+      name: nv.kube-dns.kube-system-egress-9
+      ports: any
+      priority: 0
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: kube-dns.kube-system
+        - key: domain
+          op: =
+          value: kube-system
+        name: nv.kube-dns.kube-system
+        original_name: ""
+    file: []
+    ingress: []
+    process:
+    - action: allow
+      allow_update: false
+      name: pause
+      path: /pause
+    - action: allow
+      allow_update: false
+      name: virtual-worker
+      path: /app/virtual-worker
+    process_profile:
+      baseline: basic
+    target:
+      policymode: Discover
+      selector:
+        comment: ""
+        criteria:
+        - key: service
+          op: =
+          value: virtual-worker.pets
+        - key: domain
+          op: =
+          value: pets
+        name: nv.virtual-worker.pets
+        original_name: ""
+    waf:
+      settings: []
+      status: true
+kind: List
+metadata: null
